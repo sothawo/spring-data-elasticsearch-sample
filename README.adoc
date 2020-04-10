@@ -1,0 +1,15 @@
+= Spring Data Elasticsearch Sample
+
+a small sample program showing how to use Spring Data Elasticsearch.
+
+== Basics
+
+This is a small Spring Boot application with a REST controller to provide _Person_ information. It shows how to configure the application and how to integrate ElasticsearchOperations and repositories.
+
+=== Branches
+
+There are three branches for different setups:
+
+* **rest** accesses the Elastcisearch cluster using the REST client
+* **reactive** accesses the Elasticsearch cluster using the reactive REST client, This is a webflux application.
+* **transport** accesses the Elasticsearch cluster using the transport client.
