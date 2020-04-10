@@ -46,7 +46,6 @@ public class Person {
     @Nullable
     private LocalDate birthDate;
 
-
     @Nullable
     public Long getId() {
         return id;
@@ -82,7 +81,6 @@ public class Person {
     public void setBirthDate(@Nullable LocalDate birthDate) {
         this.birthDate = birthDate;
     }
-
     @Override
     public String toString() {
         return "Person{" +
