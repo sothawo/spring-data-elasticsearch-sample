@@ -15,14 +15,13 @@
 */
 package com.sothawo.springdataelasticsearchsample;
 
-import org.springframework.data.elasticsearch.core.SearchHits;
-import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
+import org.springframework.data.elasticsearch.core.SearchHit;
+import org.springframework.data.elasticsearch.repository.ReactiveElasticsearchRepository;
+import reactor.core.publisher.Flux;
 
-import java.util.List;
+public interface PersonRepository extends ReactiveElasticsearchRepository<Person, Long> {
 
-public interface PersonRepository extends ElasticsearchRepository<Person, Long> {
+    Flux<SearchHit<Person>> findByLastName(final String lastName);
 
-    SearchHits<Person> findByLastName(final String lastName);
-
-    SearchHits<Person> findByLastNameOrFirstName(String lastName, String firstName);
+    Flux<SearchHit<Person>> findByLastNameOrFirstName(String lastName, String firstName);
 }

@@ -18,7 +18,7 @@ package com.sothawo.springdataelasticsearchsample;
 import com.devskiller.jfairy.Fairy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.elasticsearch.core.SearchHits;
+import org.springframework.data.elasticsearch.core.SearchHit;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +27,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.Locale;
@@ -80,30 +82,27 @@ public class PersonController {
     }
 
     @PostMapping("/person")
-    public String savePerson(@RequestBody final Person person) {
-        return personRepository.save(person).getId().toString();
+    public Mono<String> savePerson(@RequestBody final Person person) {
+        return personRepository.save(person).map(person1 -> person1.getId().toString());
     }
 
     @GetMapping("/persons")
-    public Iterable<Person> allPersons() {
+    public Flux<Person> allPersons() {
         return personRepository.findAll();
     }
 
     @GetMapping("/persons/{name}")
-    public SearchHits<Person> byName(@PathVariable("name") final String name) {
-        SearchHits<Person> searchHits = personRepository.findByLastNameOrFirstName(name, name);
-        LOG.debug("{}", searchHits);
-        searchHits.forEach(searchHit -> LOG.debug("{}", searchHit));
-        return searchHits;
+    public Flux<SearchHit<Person>> byName(@PathVariable("name") final String name) {
+        return personRepository.findByLastNameOrFirstName(name, name);
     }
 
     @GetMapping("/person/{id}")
-    public Person byId(@PathVariable("id") final Long id) {
-        return personRepository.findById(id).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND));
+    public Mono<Person> byId(@PathVariable("id") final Long id) {
+        return personRepository.findById(id).switchIfEmpty(Mono.error(new HttpClientErrorException(HttpStatus.NOT_FOUND)));
     }
 
     @GetMapping("/persons/count")
-    public long count() {
+    public Mono<Long> count() {
         return personRepository.count();
     }
 }
