@@ -6,7 +6,7 @@ a small sample program showing how to use Spring Data Elasticsearch.
 
 This is a small Spring Boot application with a REST controller to provide _Person_ information. It shows how to configure the application and how to integrate ElasticsearchOperations and repositories.
 
-The configured versions of Sprig Data Elasticsearch and Spring Data Commons are the latest development version, as this sample is meant for local testing when developeing Spring Data Elasticsearch.
+The configured versions of Spring Data Elasticsearch and Spring Data Commons are the latest development versions, as this sample is meant for local testing when developeing Spring Data Elasticsearch.
 
 === Building and Testing the Spring Data Elasticsearch
 
@@ -15,7 +15,7 @@ The maven build from this project then picks up this newly built version.
 
 == Branches
 
-There are three branches for different setups:
+There are three branches for different setups
 
 * **rest** accesses the Elasticsearch cluster using the REST client
 * **reactive** accesses the Elasticsearch cluster using the reactive REST client, This is a webflux application.
